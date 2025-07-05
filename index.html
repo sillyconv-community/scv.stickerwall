@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Vibe Wall</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-white p-6 font-sans">
+  <h1 class="text-3xl font-bold mb-4">Leave a Vibe 🔥</h1>
+
+  <div class="flex gap-2 mb-4">
+    <button class="emoji-btn text-3xl">🔥</button>
+    <button class="emoji-btn text-3xl">🎧</button>
+    <button class="emoji-btn text-3xl">💡</button>
+    <button class="emoji-btn text-3xl">🧓</button>
+    <button class="emoji-btn text-3xl">😴</button>
+  </div>
+
+  <input id="message" placeholder="Say something..." class="text-black p-2 rounded w-full mb-2" />
+  <button id="send" class="bg-green-500 text-white px-4 py-2 rounded">Send</button>
+
+  <h2 class="mt-6 text-xl font-semibold">Live Vibes</h2>
+  <ul id="feed" class="mt-2 space-y-2"></ul>
+
+  <script>
+    const supabase = supabase.createClient('https://cegaqgovzbqovefquoxw.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNlZ2FxZ292emJxb3ZlZnF1b3h3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3MTUwMDUsImV4cCI6MjA2NzI5MTAwNX0.-UGyAieQrtZlkUuWuV2Zkbjlqpw1RyqJsPYC7KhIJyE');
+
+    let selectedEmoji = '🔥';
+    document.querySelectorAll('.emoji-btn').forEach(btn =>
+      btn.addEventListener('click', () => {
+        selectedEmoji = btn.textContent;
+        document.querySelectorAll('.emoji-btn').forEach(b => b.classList.remove('ring'));
+        btn.classList.add('ring', 'ring-yellow-400');
+      })
+    );
+
+    document.getElementById('send').addEventListener('click', async () => {
+      const message = document.getElementById('message').value;
+      await supabase.from('vibes').insert([{ emoji: selectedEmoji, message }]);
+      document.getElementById('message').value = '';
+    });
+
+    async function loadVibes() {
+      const { data } = await supabase.from('vibes').select('*').order('created_at', { ascending: false }).limit(10);
+      const feed = document.getElementById('feed');
+      feed.innerHTML = '';
+      data.forEach(v => {
+        const li = document.createElement('li');
+        li.innerHTML = `<span class="text-2xl">${v.emoji}</span> <span>${v.message || ''}</span>`;
+        feed.appendChild(li);
+      });
+    }
+
+    loadVibes();
+    supabase.channel('public:vibes')
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'vibes' }, loadVibes)
+      .subscribe();
+  </script>
+</body>
+</html>
