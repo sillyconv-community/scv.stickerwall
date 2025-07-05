@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8" />
   <title>Vibe Wall</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
@@ -23,7 +24,9 @@
   <ul id="feed" class="mt-2 space-y-2"></ul>
 
   <script>
-    const supabase = supabase.createclient('https://cegaqgovzbqovefquoxw.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNlZ2FxZ292emJxb3ZlZnF1b3h3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3MTUwMDUsImV4cCI6MjA2NzI5MTAwNX0.-UGyAieQrtZlkUuWuV2Zkbjlqpw1RyqJsPYC7KhIJyE');
+    const supabaseUrl = 'https://cegaqgovzbqovefquoxw.supabase.co';
+    const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNlZ2FxZ292emJxb3ZlZnF1b3h3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3MTUwMDUsImV4cCI6MjA2NzI5MTAwNX0.-UGyAieQrtZlkUuWuV2Zkbjlqpw1RyqJsPYC7KhIJyE';
+    const supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey)
 
     let selectedEmoji = '🔥';
     document.querySelectorAll('.emoji-btn').forEach(btn =>
@@ -36,12 +39,12 @@
 
     document.getElementById('send').addEventListener('click', async () => {
       const message = document.getElementById('message').value;
-      await supabase.from('vibes').insert([{ emoji: selectedEmoji, message }]);
+      await supabaseClient.from('vibes').insert([{ emoji: selectedEmoji, message }]);
       document.getElementById('message').value = '';
     });
 
     async function loadVibes() {
-      const { data } = await supabase.from('vibes').select('*').order('created_at', { ascending: false }).limit(10);
+      const { data } = await supabaseClient.from('vibes').select('*').order('created_at', { ascending: false }).limit(10);
       const feed = document.getElementById('feed');
       feed.innerHTML = '';
       data.forEach(v => {
@@ -52,7 +55,7 @@
     }
 
     loadVibes();
-    supabase.channel('public:vibes')
+    supabaseClient.channel('public:vibes')
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'vibes' }, loadVibes)
       .subscribe();
   </script>
