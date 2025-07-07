@@ -6,6 +6,7 @@ import { useState, useEffect } from "react"
 import { createClient } from "@supabase/supabase-js"
 import { X, Instagram } from "lucide-react"
 import Image from "next/image"
+import { VibeMessage } from "@/components/vibe-message"
 
 const supabaseUrl = "https://cegaqgovzbqovefquoxw.supabase.co"
 const supabaseAnonKey =
@@ -137,11 +138,14 @@ export default function VibeWall() {
                 id="message"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                placeholder="Say something..."
+                placeholder="Say something... (URLs will be automatically made clickable!)"
                 rows={3}
                 className="w-full p-3 rounded-xl border-2 border-sage/30 focus:border-orange focus:outline-none transition-colors bg-cream/50 resize-none"
                 onKeyPress={handleKeyPress}
               />
+              <p className="text-xs text-sage mt-1">
+                💡 Tip: Paste YouTube, Instagram, or any web links - they'll become clickable!
+              </p>
             </div>
 
             <button
@@ -172,8 +176,8 @@ export default function VibeWall() {
                 >
                   <div className="flex items-start gap-3">
                     <span className="text-3xl flex-shrink-0">{vibe.emoji}</span>
-                    <div className="flex-1">
-                      <p className="text-olive-dark font-medium">{vibe.message}</p>
+                    <div className="flex-1 min-w-0">
+                      <VibeMessage message={vibe.message} className="font-medium mb-2" />
                       {vibe.name && <p className="text-olive text-sm mt-1">— {vibe.name}</p>}
                       <p className="text-sage text-xs mt-2">{new Date(vibe.created_at).toLocaleString()}</p>
                     </div>
