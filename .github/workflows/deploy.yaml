@@ -28,7 +28,7 @@ jobs:
         run: npm run build
         working-directory: ./stickerwall_v0
         env:
-	  GITHUB_PAGES: true
+          GITHUB_PAGES: true
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
