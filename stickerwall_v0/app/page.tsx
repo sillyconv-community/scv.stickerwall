@@ -12,6 +12,7 @@ const supabaseAnonKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNlZ2FxZ292emJxb3ZlZnF1b3h3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3MTUwMDUsImV4cCI6MjA2NzI5MTAwNX0.-UGyAieQrtZlkUuWuV2Zkbjlqpw1RyqJsPYC7KhIJyE"
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey)
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 interface Vibe {
   id: number
@@ -81,7 +82,7 @@ export default function VibeWall() {
         <div className="text-center mb-8">
           <div className="mb-6">
             <Image
-              src="/brand-logo.png"
+              src={`${basePath}/brand-logo.png`}
               alt="Brand Logo"
               width={200}
               height={150}
