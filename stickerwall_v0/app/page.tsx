@@ -144,7 +144,7 @@ export default function VibeWall() {
                 onKeyPress={handleKeyPress}
               />
               <p className="text-xs text-sage mt-1">
-                💡 Tip: Paste YouTube, Instagram, or any web links - they'll become clickable!
+                💡 Tip: Paste YouTube, Instagram, or any web links - they&apos;ll become clickable!
               </p>
             </div>
 
