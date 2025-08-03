@@ -30,7 +30,7 @@ export default function VibeWall() {
   const [vibes, setVibes] = useState<Vibe[]>([])
   const [showPopup, setShowPopup] = useState(false)
 
-  const emojis = ["🔥", "🎧", "💡", "🧓", "😴"]
+  const emojis = ["🔥", "🎧", "💡", "🤘🏻", "😴"]
 
   useEffect(() => {
     loadVibes()
@@ -90,8 +90,8 @@ export default function VibeWall() {
               className="mx-auto rounded-lg shadow-lg"
             />
           </div>
-          <h1 className="text-4xl font-bold text-olive-dark mb-2">Silly Conv. Valley 留言板🔥</h1>
-          <p className="text-olive text-lg">歡迎登陸 “啱 VIBE 留言板” 此網站是來自廣東話 Podcast SILLY CONV. VALLEY - EP.25 的即興 VIBE CODE 環節！</p>
+          <h1 className="text-4xl font-bold text-olive-dark mb-2">SILLY CONV. VALLEY</h1>
+          <p className="text-olive text-lg">歡迎登陸 "啱 VIBE 留言板🌴" <br /> 此網站是來自廣東話 Podcast SILLY CONV. VALLEY EP.25 中的 <br />即興 VIBE CODE 環節！</p>
         </div>
 
         {/* Emoji Selection */}
