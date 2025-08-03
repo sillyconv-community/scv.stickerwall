@@ -82,16 +82,18 @@ export default function VibeWall() {
         {/* Header with Logo */}
         <div className="text-center mb-8">
           <div className="mb-6">
-            <Image
-              src={`${basePath}/brand-logo.png`}
-              alt="Brand Logo"
-              width={200}
-              height={150}
-              className="mx-auto rounded-lg shadow-lg"
-            />
+            <a href="https://linktr.ee/sillyconvvalley" target="_blank" rel="noopener noreferrer">
+              <Image
+                src={`${basePath}/brand-logo.png`}
+                alt="Brand Logo"
+                width={200}
+                height={150}
+                className="mx-auto rounded-lg shadow-lg"
+              />
+            </a>
           </div>
           <h1 className="text-4xl font-bold text-olive-dark mb-2">SILLY CONV. VALLEY</h1>
-          <p className="text-olive text-lg">歡迎登陸 "啱 VIBE 留言板🌴" <br /> 此網站是來自廣東話 Podcast SILLY CONV. VALLEY EP.25 中的 <br />即興 VIBE CODE 環節！</p>
+          <p className="text-olive text-lg">歡迎登陸 &quot;啱 VIBE 留言板🌴&quot; <br /> 此網站是來自廣東話 Podcast SILLY CONV. VALLEY EP.25 中的 <br />即興 VIBE CODE 環節！</p>
         </div>
 
         {/* Emoji Selection */}
